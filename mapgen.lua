@@ -24,17 +24,18 @@ core.register_on_generated(function(vm, minp, maxp, blockseed)
 		return
 	end
 	local t1 = os.clock()
-	local x0, y0, z0 = minp.x, minp.y, minp.z
+	local x0, y0, z0 = minp.x, minp.y - 1, minp.z
 	local x1, y1, z1 = maxp.x, maxp.y, maxp.z
 	local emin, emax = vm:get_emerged_area()
 	local area = VoxelArea:new({
 		MinEdge = emin,
 		MaxEdge = emax
 	})
+    y1 = y1 + 1
 	local data = vm:get_data()
     local sidelen = x1 - x0 + 1
-	local chulens = {x = sidelen, y = sidelen, z = sidelen}
-	local minposxyz = {x = x0, y = y0, z = z0}
+	local chulens = {x = sidelen, y = sidelen + 2, z = sidelen}
+	local minposxyz = {x = x0, y = y0 - 1, z = z0}
 	-- Perlin map for this chunk
 	local nobj_cave = core.get_perlin_map(np_cave, chulens)
 	local nvals_cave = nobj_cave:get3dMap_flat(minposxyz)
